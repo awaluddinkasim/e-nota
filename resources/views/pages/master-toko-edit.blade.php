@@ -17,7 +17,7 @@
                             <h5>Data Toko</h5>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('master-data.update', ['id' => $toko->id, 'jenis' => 'toko']) }}" method="POST">
+                            <form action="{{ route('master-data.update', ['id' => $toko->id, 'jenis' => 'toko']) }}" method="POST" enctype="multipart/form-data">
                                 @method("PUT")
                                 @csrf
                                 <div class="col-12">
