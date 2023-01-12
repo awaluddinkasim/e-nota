@@ -10,7 +10,7 @@ function getNomorNota($tokoID)
     if ($nota) {
         $nomor = explode("/", $nota->nomor)[0] + 1;
     } else {
-        $nomor = 0;
+        $nomor = 1;
     }
 
     return sprintf("%04s", $nomor) . '/' . $toko->kode . '/' . date('m') . '/' . date('Y');
