@@ -64,9 +64,9 @@ class ApiController extends Controller
         ], 200);
     }
 
-    public function getNota()
+    public function getNota(Request $request)
     {
-        $nota = Nota::orderBy('created_at', 'DESC')->get();
+        $nota = Nota::where('toko_id', $request->user()->toko_id)->orderBy('created_at', 'DESC')->get();
 
         return response()->json([
             'message' => 'Berhasil',
@@ -76,7 +76,7 @@ class ApiController extends Controller
 
     public function buatNota(Request $request)
     {
-        $nomorNota = getNomorNota($request->user()->toko->id);
+        $nomorNota = getNomorNota($request->user()->toko_id);
         $dir = public_path('files/nota/' . str_replace('/', '-', $nomorNota));
 
         $file = $request->file('ttd');
