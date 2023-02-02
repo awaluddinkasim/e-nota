@@ -32,7 +32,7 @@
     </style>
 </head>
 <body>
-    <img src="{{ url('/files/toko/' . $nota->toko->kop) }}" alt="" style="width: 100%; margin-bottom: 30px">
+    <img src="{{ public_path('/files/toko/' . $nota->toko->kop) }}" alt="" style="width: 100%; margin-bottom: 30px">
 
     <div>
         <table style="width: unset; margin: auto">
@@ -44,7 +44,7 @@
             <tr>
                 <td>Nama Petugas</td>
                 <td style="width: 30px; text-align: center">:</td>
-                <td>{{ $petugas->nama }}</td>
+                <td>{{ $pedagang->nama }}</td>
             </tr>
             <tr>
                 <td>No. Telpon Toko</td>
@@ -107,6 +107,11 @@
                 <td>{{ $item->berat }}</td>
             </tr>
         @endforeach
+        <tr>
+            <th>Total</th>
+            <td>{{ $nota->items->sum('jumlah') }}</td>
+            <td>{{ $nota->items->sum('berat') }} kg</td>
+        </tr>
     </table>
 
     <table>
@@ -131,15 +136,15 @@
         </tr>
         <tr>
             <td>
-                <img src="{{ url('/files/nota/' . str_replace('/', '-', $nota->nomor) . '/' . $nota->ttd) }}" alt="" style="height: 70px">
+                <img src="{{ public_path('/files/nota/' . str_replace('/', '-', $nota->nomor) . '/' . $nota->ttd) }}" alt="" style="height: 70px">
             </td>
             <td>
-                <img src="{{ url('/files/petugas/' . $petugas->ttd) }}" alt="" style="height: 70px">
+                <img src="{{ public_path('/files/pedagang/' . $pedagang->ttd) }}" alt="" style="height: 70px">
             </td>
         </tr>
         <tr>
             <td>{{ $nota->customer->nama }}</td>
-            <td>{{ $petugas->nama }}</td>
+            <td>{{ $pedagang->nama }}</td>
         </tr>
     </table>
 </body>

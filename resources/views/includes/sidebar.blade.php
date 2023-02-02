@@ -50,35 +50,17 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ Request::segment(1) == 'master' ? 'active' : '' }} has-sub">
-                    <a href="#" class='sidebar-link'>
-                        <i class="bi bi-collection-fill"></i>
-                        <span>Master Data</span>
+                <li class="sidebar-item {{ Request::segment(1) == 'pedagang' ? 'active' : '' }}">
+                    <a href="{{ route('pedagang') }}" class='sidebar-link'>
+                        <i class="bi bi-person-workspace"></i>
+                        <span>Pedagang</span>
                     </a>
-                    <ul class="submenu {{ Request::segment(1) == 'master' ? 'active' : '' }}">
-                        <li class="submenu-item {{ Request::segment(2) == 'gabah' ? 'active' : '' }}">
-                            <a href="{{ route('master-data', 'gabah') }}">Data Gabah</a>
-                        </li>
-                        <li class="submenu-item {{ Request::segment(2) == 'toko' ? 'active' : '' }}">
-                            <a href="{{ route('master-data', 'toko') }}">Data Toko</a>
-                        </li>
-                        <li class="submenu-item {{ Request::segment(2) == "petugas" ? 'active' : '' }}">
-                            <a href="{{ route('master-data', 'petugas') }}">Data Petugas</a>
-                        </li>
-                    </ul>
                 </li>
 
                 <li class="sidebar-item {{ Request::segment(1) == 'pelanggan' ? 'active' : '' }}">
                     <a href="{{ route('customers') }}" class='sidebar-link'>
                         <i class="bi bi-file-person-fill"></i>
                         <span>Pelanggan</span>
-                    </a>
-                </li>
-
-                <li class="sidebar-item {{ Request::segment(1) == 'nota' ? 'active' : '' }}">
-                    <a href="{{ route('arsip-nota') }}" class='sidebar-link'>
-                        <i class="bi bi-receipt"></i>
-                        <span>Arsip Nota</span>
                     </a>
                 </li>
 
@@ -89,12 +71,12 @@
                     </a>
                 </li>
 
-                {{-- <li class="sidebar-item {{ Request::segment(1) == 'pengaturan' ? 'active' : '' }}">
+                <li class="sidebar-item {{ Request::segment(1) == 'pengaturan' ? 'active' : '' }}">
                     <a href="{{ route('pengaturan') }}" class='sidebar-link'>
                         <i class="bi bi-gear-fill"></i>
                         <span>Pengaturan</span>
                     </a>
-                </li> --}}
+                </li>
 
                 <li class="sidebar-title">User</li>
 

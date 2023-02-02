@@ -19,7 +19,7 @@
 
 <body>
     <div id="app">
-        @include('includes.sidebar')
+        @include(auth()->user()->role == "super-admin" ? 'includes.admin-sidebar' : 'includes.sidebar')
 
         <div id="main">
             <header class="mb-3">

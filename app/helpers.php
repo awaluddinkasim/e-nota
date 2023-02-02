@@ -13,5 +13,5 @@ function getNomorNota($tokoID)
         $nomor = 1;
     }
 
-    return sprintf("%04s", $nomor) . '/' . $toko->kode . '/' . date('m') . '/' . date('Y');
+    return sprintf("%04s", $nomor) . '/T' . sprintf("%02s", $tokoID) . '/' . date('m') . '/' . date('Y');
 }

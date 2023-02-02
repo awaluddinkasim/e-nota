@@ -16,13 +16,17 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('toko_id');
-            $table->string('kode')->unique();
             $table->string('nama');
             $table->text('alamat');
             $table->string('no_hp');
+            $table->foreignId('registered_by');
             $table->timestamps();
 
             $table->foreign('toko_id')->references('id')->on('toko')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+
+            $table->foreign('registered_by')->references('id')->on('users')
             ->onUpdate('cascade')
             ->onDelete('cascade');
         });

@@ -33,4 +33,9 @@ class Admin extends Authenticatable
         'remember_token',
     ];
 
+    public function toko()
+    {
+        return $this->hasOne(Toko::class, 'admin');
+    }
+
 }

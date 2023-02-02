@@ -6,7 +6,6 @@ use App\Models\Customer;
 use App\Models\Gabah;
 use App\Models\Nota;
 use App\Models\NotaItem;
-use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -18,7 +17,7 @@ class ApiController extends Controller
         $file = $request->file('ttd');
         $filename = uniqid() . "." . $file->extension();
 
-        $file->move(public_path('files/petugas'), $filename);
+        $file->move(public_path('files/pedagang'), $filename);
 
         $user = User::find($request->user()->id);
         $user->ttd = $filename;
@@ -31,7 +30,10 @@ class ApiController extends Controller
 
     public function customers(Request $request)
     {
-        $customers = Customer::orderBy('nama')->where('toko_id', $request->user()->toko_id)->get();
+        $customers = Customer::orderBy('nama')
+        ->where('toko_id', $request->user()->toko_id)
+        ->where('registered_by', $request->user()->id)
+        ->get();
 
         return response()->json([
             'message' => 'Berhasil',
@@ -43,10 +45,10 @@ class ApiController extends Controller
     {
         $customer = new Customer();
         $customer->toko_id = $request->user()->toko_id;
-        $customer->kode = strtoupper(uniqid());
         $customer->nama = $request->nama;
         $customer->no_hp = $request->no_hp;
         $customer->alamat = $request->alamat;
+        $customer->registered_by = $request->user()->id;
         $customer->save();
 
         return response()->json([
@@ -64,9 +66,9 @@ class ApiController extends Controller
         ], 200);
     }
 
-    public function getNota(Request $request)
+    public function getNota(Request $request, $customer)
     {
-        $nota = Nota::where('toko_id', $request->user()->toko_id)->orderBy('created_at', 'DESC')->get();
+        $nota = Nota::where('toko_id', $request->user()->toko_id)->where('customer_id', $customer)->orderBy('created_at', 'DESC')->get();
 
         return response()->json([
             'message' => 'Berhasil',
@@ -103,7 +105,7 @@ class ApiController extends Controller
         }
 
         Pdf::loadView('pdf.nota', [
-            'petugas' => $request->user(),
+            'pedagang' => $request->user(),
             'nota' => $nota,
         ])->save($dir . '/nota.pdf');
 
@@ -122,10 +124,7 @@ class ApiController extends Controller
         $dir = public_path('files/nota/' . str_replace('/', '-', $nota->nomor));
 
         Pdf::loadView('pdf.nota', [
-            'namaToko' => Setting::where('name', 'nama-toko')->first(),
-            'alamatToko' => Setting::where('name', 'alamat-toko')->first(),
-            'contact' => Setting::where('name', 'contact')->first(),
-            'petugas' => $request->user(),
+            'pedagang' => $request->user(),
             'nota' => $nota,
         ])->save($dir . '/nota.pdf');
 
@@ -136,17 +135,17 @@ class ApiController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $petugas = User::find($request->user()->id);
-        $petugas->nama = $request->nama;
-        $petugas->username = $request->username;
+        $pedagang = User::find($request->user()->id);
+        $pedagang->nama = $request->nama;
+        $pedagang->username = $request->username;
         if ($request->password) {
-            $petugas->password = bcrypt($request->password);
+            $pedagang->password = bcrypt($request->password);
         }
-        $petugas->update();
+        $pedagang->update();
 
         return response()->json([
             'message' => 'Berhasil',
-            'user' => $petugas
+            'user' => $pedagang
         ], 200);
     }
 }

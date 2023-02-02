@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function loginPage()
     {
-        return view('pages.auth');
+        return view('auth');
     }
 
     public function login(Request $request)
@@ -19,7 +19,16 @@ class AuthController extends Controller
         $remember = $request->remember ? 'true' : 'false';
 
         if (Auth::attempt(['username' => $request->username, 'password' => $request->password], $remember)) {
-            return redirect()->route('dashboard');
+            if (Auth::user()->role == "super-admin") {
+                return redirect()->route('admin.dashboard');
+            }
+            if (Auth::user()->toko) {
+                return redirect()->route('dashboard');
+            } else {
+                Auth::logout();
+
+                return redirect()->back()->with('failed', 'Akun anda belum terdaftar pada toko tertentu');
+            }
         }
         return redirect()->back()->with('failed', 'Username atau password salah');
     }

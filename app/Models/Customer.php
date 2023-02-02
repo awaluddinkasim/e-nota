@@ -13,4 +13,14 @@ class Customer extends Model
     {
         return $this->hasMany(Nota::class, 'customer_id');
     }
+
+    public function pedagang()
+    {
+        return $this->belongsTo(User::class, 'registered_by');
+    }
+
+    public function toko()
+    {
+        return $this->belongsTo(Toko::class, 'toko_id');
+    }
 }

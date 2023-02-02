@@ -21,7 +21,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
 
     Route::get('gabah', [ApiController::class, 'gabah']);
 
-    Route::get('nota', [ApiController::class, 'getNota']);
+    Route::get('nota/{customer}', [ApiController::class, 'getNota']);
     Route::post('nota', [ApiController::class, 'buatNota']);
     Route::put('nota', [ApiController::class, 'updateNota']);
 
